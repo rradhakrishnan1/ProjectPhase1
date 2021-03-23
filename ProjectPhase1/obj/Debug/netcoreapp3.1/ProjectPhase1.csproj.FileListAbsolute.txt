@@ -1,0 +1,6 @@
+C:\Users\ramya_radhakrishnan1\Source\repos\ProjectPhase1\bin\Debug\netcoreapp3.1\ProjectPhase1.exe
+C:\Users\ramya_radhakrishnan1\Source\repos\ProjectPhase1\bin\Debug\netcoreapp3.1\ProjectPhase1.dll
+C:\Users\ramya_radhakrishnan1\Source\repos\ProjectPhase1\obj\Debug\netcoreapp3.1\ProjectPhase1.AssemblyInfoInputs.cache
+C:\Users\ramya_radhakrishnan1\Source\repos\ProjectPhase1\obj\Debug\netcoreapp3.1\ProjectPhase1.AssemblyInfo.cs
+C:\Users\ramya_radhakrishnan1\Source\repos\ProjectPhase1\obj\Debug\netcoreapp3.1\ProjectPhase1.dll
+C:\Users\ramya_radhakrishnan1\Source\repos\ProjectPhase1\obj\Debug\netcoreapp3.1\ProjectPhase1.pdb
