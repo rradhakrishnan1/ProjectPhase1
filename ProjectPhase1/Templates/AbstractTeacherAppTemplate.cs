@@ -17,6 +17,8 @@ namespace ProjectPhase1.Templates
             {
                 displayMenu();
 
+                Console.WriteLine("Please start with option 1 loading the Teachers from file.");
+
                 var option = getOption();
 
                 switch (option)
@@ -52,6 +54,8 @@ namespace ProjectPhase1.Templates
         }
 
         protected abstract int getOption();
+        protected abstract int getUpdateOption();
+
         protected abstract void loadTeachers(); 
         protected abstract void saveTeachers(IEnumerable<Teacher> teachers);
         protected abstract void addTeacher(); 

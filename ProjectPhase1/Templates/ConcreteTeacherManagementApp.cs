@@ -21,26 +21,22 @@ namespace ProjectPhase1.Templates
 
         protected override void saveTeachers(IEnumerable<Teacher> teachers)
         {
-            // TODO: Save teachers using the repository
             var teachersRepository = new PipeDelimitedFileTeachersRepository("teachers.txt");
             teachersRepository.Save(teachers);
         }
 
         protected override int getOption()
         {
-            // TODO: Get rid of exception
-            // TODO: Read user input from console, convert to int and return
             try
             {
                 return (int.Parse(Console.ReadLine()));
             }
             catch(Exception e)
             {
-                Console.WriteLine("Enter a  valid integer value");
+                Console.WriteLine("Enter a  valid integer value from 1 to 9");
             }
 
             return -1;
-
         }
 
         protected override void addTeacher()
@@ -49,6 +45,8 @@ namespace ProjectPhase1.Templates
             var teacher = teacherBuilder.Build();
             _teachers[teacher.ID] = teacher;
             Console.WriteLine("New Teacher added");
+
+            saveTeachers(_teachers.Values);
         }
 
         protected override void deleteTeacher()
@@ -62,10 +60,12 @@ namespace ProjectPhase1.Templates
             }
             else
             {
-
                 _teachers.Remove(id);
                 Console.WriteLine("Removed teacher");
             }
+
+            saveTeachers(_teachers.Values);
+
         }
 
         protected override void findTeacher()
@@ -78,11 +78,9 @@ namespace ProjectPhase1.Templates
                 Console.WriteLine($"Teacher with id {id} not found");
             }
             else
-            {
-          
+            {          
                 Console.WriteLine($"Teacher with id { _teachers[id]} is found");
             }
-
         }
 
         protected override void listTeachers(IEnumerable<Teacher> teachers)
@@ -105,14 +103,43 @@ namespace ProjectPhase1.Templates
             ISortTeachersStrategy sortStrategy = null;
             switch (option)
             {
-                case 1: sortStrategy = new SortTeachersByIdStrategy(); break; // create new strategy to sort by id
-                case 2: sortStrategy = new SortTeachersByFirstNameStrategy(); break; // create new strategy to sort by first name
+                case 1: sortStrategy = new SortTeachersByIdStrategy(); break;
+                case 2: sortStrategy = new SortTeachersByFirstNameStrategy(); break; 
                 case 3: sortStrategy = new SortTeachersByLastNameStrategy(); break;
             }
 
             var sorted = sortStrategy.Sort(_teachers.Values);
             listTeachers(sorted);
+            
         }
+
+        private void displayUpdateMenu()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("Please select in the following options:");
+            Console.WriteLine("1)FirstName");
+            Console.WriteLine("2) LastName");
+            Console.WriteLine("3) Both");
+            Console.WriteLine("4) None");
+        }
+
+        protected override  int getUpdateOption()
+        {
+            Console.WriteLine("Do you want to update the Firstname or Lastname or both?");
+
+            displayUpdateMenu();
+            try
+            {
+                return (int.Parse(Console.ReadLine()));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Enter a  valid integer value from 1 to 4");
+            }
+
+            return -1;
+
+        }      
 
         protected override void updateTeacher()
         {
@@ -128,22 +155,54 @@ namespace ProjectPhase1.Templates
             Console.WriteLine("You selected...");
             Console.WriteLine(teacher);
 
-            // TODO... read and assign new values for first and last name
 
-            Console.WriteLine("Enter new FirstName of the selected teacher to update");
-            var NewFirstName = Console.ReadLine();
-            _teachers[id].FirstName = NewFirstName;
+            var option = getUpdateOption();
 
-            Console.WriteLine("Updated FirstName of the selected teacher");
-            Console.WriteLine(teacher);
+            if (option == 3)
+            {
 
-            Console.WriteLine("Enter new LastName of the selected teacher to update");
-            var NewLastName = Console.ReadLine();
-            _teachers[id].LastName = NewLastName;
+                Console.WriteLine("Enter new FirstName of the selected teacher to update");
+                var NewFirstName = Console.ReadLine();
+                _teachers[id].FirstName = NewFirstName;
 
-            Console.WriteLine("Updated LastName of the selected teacher");
-            Console.WriteLine(teacher);
+                Console.WriteLine("Updated FirstName of the selected teacher");
+                Console.WriteLine(teacher);
 
+
+                Console.WriteLine("Enter new LastName of the selected teacher to update");
+                var NewLastName = Console.ReadLine();
+                _teachers[id].LastName = NewLastName;
+
+                Console.WriteLine("Updated LastName of the selected teacher");
+                Console.WriteLine(teacher);
+            }
+
+            else if (option == 1)
+            {
+                Console.WriteLine("Enter new FirstName of the selected teacher to update");
+                var NewFirstName = Console.ReadLine();
+                _teachers[id].FirstName = NewFirstName;
+
+                Console.WriteLine("Updated FirstName of the selected teacher");
+                Console.WriteLine(teacher);
+
+            }
+            else if (option == 2)
+            {
+                Console.WriteLine("Enter new LastName of the selected teacher to update");
+                var NewLastName = Console.ReadLine();
+                _teachers[id].LastName = NewLastName;
+
+                Console.WriteLine("Updated LastName of the selected teacher");
+                Console.WriteLine(teacher);
+            }
+
+            else
+            {
+                Console.WriteLine("User not interested in updating the teacher details.Hence exiting.");
+            }
+
+                saveTeachers(_teachers.Values);
         }
     }
 }

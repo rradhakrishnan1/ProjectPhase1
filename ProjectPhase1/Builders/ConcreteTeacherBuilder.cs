@@ -24,7 +24,6 @@ namespace ProjectPhase1.Builders
 
         protected override void BuildLastName(Teacher teacher)
         {
-            // TODO: prompt, read and assign first name
             Console.WriteLine("Enter the LastName for the teacher");
             teacher.LastName = Console.ReadLine();
         }

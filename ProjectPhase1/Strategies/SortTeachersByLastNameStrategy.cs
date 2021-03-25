@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProjectPhase1.Strategies
 {
-    public class SortTeachersByFirstNameStrategy : AbstractSortTeachersStrategy
+  
+    public class SortTeachersByLastNameStrategy : AbstractSortTeachersStrategy
     {
         public override List<Teacher> Sort(IEnumerable<Teacher> teachers)
         {
@@ -15,9 +16,9 @@ namespace ProjectPhase1.Strategies
             foreach (var teacher in teachers)
             {
                 var inserted = false;
-                for (var i=0; i<sorted.Count(); i++)
-                { 
-                    if (string.Compare(teacher.FirstName, sorted[i].FirstName) == -1)
+                for (var i = 0; i < sorted.Count(); i++)
+                {
+                    if (string.Compare(teacher.LastName, sorted[i].LastName) == -1)
                     {
                         inserted = true;
                         sorted.Insert(i, teacher);
