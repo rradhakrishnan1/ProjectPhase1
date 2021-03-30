@@ -4,6 +4,7 @@ namespace ProjectPhase1.Strategies
 {
     public interface ISortTeachersStrategy
     {
-        List<Teacher> Sort(IEnumerable<Teacher> teachers);
+        List<Teacher> SortByAsc(IEnumerable<Teacher> teachers);
+        List<Teacher> SortByDesc(IEnumerable<Teacher> teachers);
     }
 }

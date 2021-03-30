@@ -11,6 +11,8 @@ namespace ProjectPhase1.Templates
 {
     public class ConcreteTeacherManagementApp : AbstractTeacherAppTemplate
     {
+        int id = 0;
+        ConcreteTeacherBuilder TeacherBuild = new ConcreteTeacherBuilder();
         protected override void loadTeachers()
         {
             var teachersRepository = new PipeDelimitedFileTeachersRepository("teachers.txt");
@@ -51,8 +53,14 @@ namespace ProjectPhase1.Templates
 
         protected override void deleteTeacher()
         {
-            Console.WriteLine("Enter ID of techer to delete");
-            var id = int.Parse(Console.ReadLine());
+
+            bool idValue = false;
+            while (!idValue)
+            {
+                Console.WriteLine("Enter an ID for the teacher to update");
+                var idInput = Console.ReadLine();
+                idValue = int.TryParse(idInput, out id);
+            }
 
             if (!_teachers. ContainsKey(id))
             {
@@ -68,10 +76,15 @@ namespace ProjectPhase1.Templates
 
         }
 
-        protected override void findTeacher()
+        protected override void searchTeacher()
         {
-            Console.WriteLine("Enter ID of teacher to find");
-            var id = int.Parse(Console.ReadLine());
+            bool idValue = false;
+            while (!idValue)
+            {
+                Console.WriteLine("Enter an ID for the teacher to update");
+                var idInput = Console.ReadLine();
+                idValue = int.TryParse(idInput, out id);
+            }
 
             if (!_teachers.ContainsKey(id))
             {
@@ -79,7 +92,7 @@ namespace ProjectPhase1.Templates
             }
             else
             {          
-                Console.WriteLine($"Teacher with id { _teachers[id]} is found");
+                Console.WriteLine($"Teacher with id { _teachers[id]}    is found");
             }
         }
 
@@ -95,21 +108,63 @@ namespace ProjectPhase1.Templates
         {
             Console.WriteLine("You chose to sort teachers");
             Console.WriteLine("How would you like to sort them?");
-            Console.WriteLine("1) ID");
-            Console.WriteLine("2) First Name");
-            Console.WriteLine("3) Last Name");
+            Console.WriteLine("1) ID by Ascending");
+            Console.WriteLine("2) ID by Descending");
+            Console.WriteLine("3) First Name by Ascending");
+            Console.WriteLine("4) First Name by Descending");
+            Console.WriteLine("5) Last Name by Ascending");
+            Console.WriteLine("6) Last Name by Descending");
 
             var option = int.Parse(Console.ReadLine());
             ISortTeachersStrategy sortStrategy = null;
             switch (option)
             {
-                case 1: sortStrategy = new SortTeachersByIdStrategy(); break;
-                case 2: sortStrategy = new SortTeachersByFirstNameStrategy(); break; 
-                case 3: sortStrategy = new SortTeachersByLastNameStrategy(); break;
-            }
+                case 1:
+                    {
+                        sortStrategy = new SortTeachersByIdStrategy();
+                        var sorted = sortStrategy.SortByAsc(_teachers.Values);
+                        listTeachers(sorted);
+                        break;
+                    }
+                case 2:
+                    {
+                        sortStrategy = new SortTeachersByIdStrategy();
+                        var sorted = sortStrategy.SortByDesc(_teachers.Values);
+                        listTeachers(sorted);
+                        break;
+                    }
+                case 3:
+                    {
+                        sortStrategy = new SortTeachersByFirstNameStrategy();
+                        var sorted = sortStrategy.SortByAsc(_teachers.Values);
+                        listTeachers(sorted);
+                        break;
+                    }
+                  
+                case 4:
+                    {
+                        sortStrategy = new SortTeachersByFirstNameStrategy();
+                        var sorted = sortStrategy.SortByDesc(_teachers.Values);
+                        listTeachers(sorted);
+                        break;
+                    }
+                case 5:
+                    {
+                        sortStrategy = new SortTeachersByLastNameStrategy();
+                        var sorted = sortStrategy.SortByAsc(_teachers.Values);
+                        listTeachers(sorted);
+                        break;
+                    }
+                case 6:
+                    {
+                        sortStrategy = new SortTeachersByLastNameStrategy();
+                        var sorted = sortStrategy.SortByDesc(_teachers.Values);
+                        listTeachers(sorted);
+                        break;
+                    }
 
-            var sorted = sortStrategy.Sort(_teachers.Values);
-            listTeachers(sorted);
+
+            }
             
         }
 
@@ -143,8 +198,14 @@ namespace ProjectPhase1.Templates
 
         protected override void updateTeacher()
         {
-            Console.WriteLine("Enter ID of teacher to update");
-            var id = int.Parse(Console.ReadLine());
+            bool idValue = false;
+            while (!idValue)
+            {
+                Console.WriteLine("Enter an ID for the teacher to update");
+                var idInput = Console.ReadLine();
+                idValue = int.TryParse(idInput, out id);
+            }
+        
             if (!_teachers.ContainsKey(id))
             {
                 Console.WriteLine($"Did not find teacher with id: {id}");
@@ -160,20 +221,17 @@ namespace ProjectPhase1.Templates
 
             if (option == 3)
             {
-
                 Console.WriteLine("Enter new FirstName of the selected teacher to update");
                 var NewFirstName = Console.ReadLine();
+                NewFirstName = TeacherBuild.ValidateName(NewFirstName);
                 _teachers[id].FirstName = NewFirstName;
-
-                Console.WriteLine("Updated FirstName of the selected teacher");
-                Console.WriteLine(teacher);
-
 
                 Console.WriteLine("Enter new LastName of the selected teacher to update");
                 var NewLastName = Console.ReadLine();
+                NewLastName = TeacherBuild.ValidateName(NewLastName);
                 _teachers[id].LastName = NewLastName;
 
-                Console.WriteLine("Updated LastName of the selected teacher");
+                Console.WriteLine("UpdatedFirstName and  LastName of the selected teacher");
                 Console.WriteLine(teacher);
             }
 
@@ -181,6 +239,7 @@ namespace ProjectPhase1.Templates
             {
                 Console.WriteLine("Enter new FirstName of the selected teacher to update");
                 var NewFirstName = Console.ReadLine();
+                NewFirstName = TeacherBuild.ValidateName(NewFirstName);
                 _teachers[id].FirstName = NewFirstName;
 
                 Console.WriteLine("Updated FirstName of the selected teacher");
@@ -191,6 +250,7 @@ namespace ProjectPhase1.Templates
             {
                 Console.WriteLine("Enter new LastName of the selected teacher to update");
                 var NewLastName = Console.ReadLine();
+                NewLastName = TeacherBuild.ValidateName(NewLastName);
                 _teachers[id].LastName = NewLastName;
 
                 Console.WriteLine("Updated LastName of the selected teacher");

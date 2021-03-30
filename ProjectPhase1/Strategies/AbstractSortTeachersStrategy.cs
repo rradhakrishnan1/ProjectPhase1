@@ -8,6 +8,8 @@ namespace ProjectPhase1.Strategies
 {
     public abstract class AbstractSortTeachersStrategy : ISortTeachersStrategy
     {
-        public abstract List<Teacher> Sort(IEnumerable<Teacher> teachers);
+        public abstract List<Teacher> SortByAsc(IEnumerable<Teacher> teachers);
+        public abstract List<Teacher> SortByDesc(IEnumerable<Teacher> teachers);
+
     }
 }

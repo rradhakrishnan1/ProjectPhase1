@@ -17,7 +17,7 @@ namespace ProjectPhase1.Templates
             {
                 displayMenu();
 
-                Console.WriteLine("Please start with option 1 loading the Teachers from file.");
+                Console.WriteLine("Please start with option 1 loading the Teachers from file for the first time.");
 
                 var option = getOption();
 
@@ -28,7 +28,7 @@ namespace ProjectPhase1.Templates
                     case 3: addTeacher(); break;
                     case 4: deleteTeacher(); break;
                     case 5: updateTeacher(); break;
-                    case 6: findTeacher(); break;
+                    case 6: searchTeacher(); break;
                     case 7: listTeachers(_teachers.Values); break;
                     case 8: sortTeachers(); break;
                     case 9: exit = true; break;
@@ -61,7 +61,7 @@ namespace ProjectPhase1.Templates
         protected abstract void addTeacher(); 
         protected abstract void deleteTeacher();
         protected abstract void updateTeacher();
-        protected abstract void findTeacher();
+        protected abstract void searchTeacher();
         protected abstract void listTeachers(IEnumerable<Teacher> teachers);
         protected abstract void sortTeachers();
    }
